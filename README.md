@@ -2,7 +2,7 @@
 
 Jogo de pedra, papel e tesoura contra o computador, feito em JavaScript puro (sem bibliotecas), HTML e CSS.
 
-**Jogo publicado:** https://enzocoutinh0.github.io/C3-Pedra-Papel/
+**Jogo publicado:** _cole aqui o link do GitHub Pages_
 
 ## Como jogar
 
