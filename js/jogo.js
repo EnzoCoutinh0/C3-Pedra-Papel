@@ -16,6 +16,7 @@ const estado = {
   historico: [], // rodadas jogadas
   terminou: false,
 };
+const memoria = { pedra: 0, papel: 0, tesoura:0 };
 
 // Elementos da página- Guarda os elementos html para o js mexer depois
 const pontosJogadorEl = document.querySelector("#pontos-jogador");
@@ -34,8 +35,20 @@ function buscarOpcao(id) { //.find(...) percorre o array e devolve o primeiro qu
 }
 
 function escolhaDoComputador() {//sorteia a jogada do computador
-  const indice = Math.floor(Math.random() * OPCOES.length);
-  return OPCOES[indice];
+  const total = memoria.pedra + memoria.papel + memoria.tesoura;
+
+  //no começo ou em 30% das vezes joga aleatorio
+  if(total <3 || Math.random() < 0.3){
+    return OPCOES[Math.floor(Math.random() * OPCOES.length)]
+  }
+
+  //Tenta descobrir a jogadda fav do jogador
+  let favorita = OPCOES[0]
+  for (const opcao of OPCOES){
+    if (memoria[opcao.id] > memoria[favorita.id]) favorita = opcao;
+  }
+
+  return OPCOES.find((opcao)=> opcao.vence === favorita.id);
 }
 
 // Retorna quem ganhou ou se foi empate
@@ -50,6 +63,7 @@ function jogarRodada(idEscolha) { // roda cada vez que escolhe alguma opção  e
 
   const jogador = buscarOpcao(idEscolha);
   const computador = escolhaDoComputador();
+  memoria[jogador.id]++; //ia aprende sua jogada
   const resultado = decidirVencedor(jogador, computador);
 
   if (resultado === "jogador") estado.pontosJogador++;
