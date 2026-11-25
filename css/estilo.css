@@ -1,0 +1,408 @@
+/* ===== Cores e medidas usadas no site todo ===== */
+:root {
+  --fundo-1: #1a1240;
+  --fundo-2: #2d1b5e;
+  --cartao: rgba(255, 255, 255, 0.07);
+  --borda: rgba(255, 255, 255, 0.12);
+  --texto: #f4f1ff;
+  --texto-fraco: #b9b2d9;
+  --amarelo: #ffd23f;
+  --azul: #3ec5ff;   /* cor do jogador */
+  --rosa: #ff5fa2;   /* cor do computador */
+  --verde: #4ee08a;
+  --vermelho: #ff5c6c;
+  --raio: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--texto);
+  font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(62, 197, 255, 0.18), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(255, 95, 162, 0.18), transparent 40%),
+    linear-gradient(160deg, var(--fundo-1), var(--fundo-2));
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+}
+
+.jogo {
+  width: 100%;
+  max-width: 680px;
+  padding: 28px 20px 40px;
+  text-align: center;
+}
+
+/* ===== Título ===== */
+h1 {
+  margin: 0 0 20px;
+  font-size: clamp(1.8rem, 6vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, var(--azul), var(--amarelo), var(--rosa));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35));
+}
+
+h2 {
+  margin: 0 0 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--amarelo);
+}
+
+/* ===== Cartões (instruções e histórico) ===== */
+.instrucoes,
+.historico {
+  text-align: left;
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  padding: 16px 22px;
+  backdrop-filter: blur(6px);
+}
+
+.instrucoes ul {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.65;
+  color: var(--texto-fraco);
+}
+
+.instrucoes strong {
+  color: var(--texto);
+}
+
+kbd {
+  display: inline-block;
+  min-width: 24px;
+  padding: 0 7px;
+  border-radius: 6px;
+  background: #fff;
+  color: var(--fundo-1);
+  font-family: inherit;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 3px 0 #b9b2d9;
+}
+
+/* ===== Placar ===== */
+.placar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 26px 0 18px;
+  padding: 12px 22px;
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: 999px;
+}
+
+.lado {
+  display: flex;
+  flex-direction: column;
+  min-width: 110px;
+}
+
+.rotulo {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--texto-fraco);
+}
+
+.pontos {
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.lado:first-child .pontos {
+  color: var(--azul);
+  text-shadow: 0 0 18px rgba(62, 197, 255, 0.6);
+}
+
+.lado:last-child .pontos {
+  color: var(--rosa);
+  text-shadow: 0 0 18px rgba(255, 95, 162, 0.6);
+}
+
+.rodada {
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--texto-fraco);
+  font-weight: 500;
+}
+
+#numero-rodada {
+  color: var(--amarelo);
+  font-weight: 700;
+}
+
+/* ===== Arena com as mãos ===== */
+.arena {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(16px, 6vw, 44px);
+}
+
+.mao {
+  width: clamp(110px, 28vw, 150px);
+  height: clamp(110px, 28vw, 150px);
+  font-size: clamp(3.4rem, 9vw, 4.6rem);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.04));
+  border: 4px solid var(--borda);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+#mao-jogador {
+  border-color: rgba(62, 197, 255, 0.5);
+}
+
+#mao-computador {
+  border-color: rgba(255, 95, 162, 0.5);
+}
+
+.mao.venceu {
+  border-color: var(--verde);
+  box-shadow: 0 0 0 6px rgba(78, 224, 138, 0.15), 0 0 32px rgba(78, 224, 138, 0.55);
+  transform: scale(1.08);
+}
+
+.mao.perdeu {
+  border-color: var(--vermelho);
+  filter: grayscale(0.8) brightness(0.75);
+  transform: scale(0.92);
+}
+
+.mao.empatou {
+  border-color: var(--amarelo);
+  box-shadow: 0 0 26px rgba(255, 210, 63, 0.45);
+}
+
+.mao.sacudindo {
+  animation: sacudir 0.45s ease;
+}
+
+@keyframes sacudir {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  25% { translate: 0 -16px; rotate: -8deg; }
+  50% { translate: 0 0; rotate: 0deg; }
+  75% { translate: 0 -8px; rotate: 6deg; }
+}
+
+.versus {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--amarelo);
+  width: 46px;
+  height: 46px;
+  line-height: 46px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+}
+
+/* ===== Mensagem do resultado ===== */
+.mensagem {
+  min-height: 1.6em;
+  margin: 24px auto;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.mensagem.vitoria,
+.mensagem.derrota {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  animation: aparecer 0.35s ease;
+}
+
+.mensagem.vitoria {
+  color: var(--fundo-1);
+  background: var(--verde);
+  box-shadow: 0 0 28px rgba(78, 224, 138, 0.5);
+}
+
+.mensagem.derrota {
+  color: #fff;
+  background: var(--vermelho);
+  box-shadow: 0 0 28px rgba(255, 92, 108, 0.45);
+}
+
+@keyframes aparecer {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ===== Botões de escolha ===== */
+.escolhas {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.botao-escolha {
+  width: 120px;
+  padding: 14px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--fundo-1);
+  background: #fff;
+  border: none;
+  border-radius: var(--raio);
+  box-shadow: 0 6px 0 #b9b2d9, 0 10px 20px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.2s ease;
+}
+
+.botao-escolha:hover:not(:disabled) {
+  background: var(--amarelo);
+  box-shadow: 0 6px 0 #c99a00, 0 12px 24px rgba(0, 0, 0, 0.35);
+  transform: translateY(-3px);
+}
+
+/* efeito de "apertar" o botão */
+.botao-escolha:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #c99a00, 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.botao-escolha:focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 3px;
+}
+
+.botao-escolha:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: 0 6px 0 #b9b2d9;
+}
+
+.icone {
+  font-size: 2.6rem;
+  line-height: 1.1;
+}
+
+.tecla {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #7d74a8;
+}
+
+/* ===== Botão "Jogar de novo" ===== */
+.botao-reiniciar {
+  margin-top: 22px;
+  padding: 14px 34px;
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--fundo-1);
+  background: var(--amarelo);
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 6px 0 #c99a00, 0 0 30px rgba(255, 210, 63, 0.45);
+  cursor: pointer;
+  animation: pulsar 1.4s ease-in-out infinite;
+}
+
+.botao-reiniciar:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #c99a00;
+}
+
+@keyframes pulsar {
+  0%, 100% { scale: 1; }
+  50% { scale: 1.06; }
+}
+
+/* ===== Histórico ===== */
+.historico {
+  margin-top: 30px;
+}
+
+.historico ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: rodada;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.historico ol:empty::before {
+  content: "Nenhuma rodada ainda.";
+  color: var(--texto-fraco);
+  font-size: 0.9rem;
+}
+
+.historico li {
+  counter-increment: rodada;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.22);
+  font-size: 0.95rem;
+  animation: aparecer 0.3s ease;
+}
+
+.historico li::before {
+  content: "Rodada " counter(rodada) " · ";
+  color: var(--amarelo);
+  font-weight: 600;
+}
+
+.oculto {
+  display: none;
+}
+
+/* ===== Telas pequenas (celular) ===== */
+@media (max-width: 480px) {
+  .placar {
+    padding: 10px 14px;
+  }
+
+  .lado {
+    min-width: 80px;
+  }
+
+  .pontos {
+    font-size: 2.2rem;
+  }
+
+  .botao-escolha {
+    width: 96px;
+  }
+}
+
+/* Respeita quem prefere menos animação */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
