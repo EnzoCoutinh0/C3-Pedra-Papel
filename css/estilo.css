@@ -1,0 +1,218 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #1b1f2a;
+  color: #eef0f5;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+.jogo {
+  width: 100%;
+  max-width: 640px;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  color: #ffd84a;
+  margin-bottom: 12px;
+}
+
+h2 {
+  font-size: 1.05rem;
+  margin: 0 0 8px;
+  color: #ffd84a;
+}
+
+.instrucoes {
+  text-align: left;
+  background: #252a38;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.instrucoes ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+kbd {
+  background: #3a4157;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-weight: bold;
+}
+
+/* Placar */
+.placar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 18px 0 10px;
+}
+
+.lado {
+  display: flex;
+  flex-direction: column;
+  width: 120px;
+}
+
+.rotulo {
+  color: #a9b0c4;
+  font-size: 0.9rem;
+}
+
+.pontos {
+  font-size: 2.6rem;
+  font-weight: bold;
+}
+
+.rodada {
+  color: #a9b0c4;
+}
+
+/* Arena com as mãos */
+.arena {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.mao {
+  width: 120px;
+  height: 120px;
+  font-size: 4rem;
+  background: #252a38;
+  border: 3px solid #3a4157;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mao.venceu {
+  border-color: #3fcf6a;
+}
+
+.mao.perdeu {
+  border-color: #e5484d;
+  opacity: 0.6;
+}
+
+.mao.empatou {
+  border-color: #ffd84a;
+}
+
+.mao.sacudindo {
+  animation: sacudir 0.4s ease;
+}
+
+@keyframes sacudir {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-14px); }
+  50% { transform: translateY(0); }
+  75% { transform: translateY(-8px); }
+}
+
+.versus {
+  font-size: 1.4rem;
+  color: #a9b0c4;
+}
+
+.mensagem {
+  font-size: 1.2rem;
+  min-height: 1.6em;
+  margin: 18px 0;
+}
+
+.mensagem.vitoria {
+  color: #3fcf6a;
+  font-weight: bold;
+}
+
+.mensagem.derrota {
+  color: #e5484d;
+  font-weight: bold;
+}
+
+/* Botões de escolha */
+.escolhas {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.botao-escolha {
+  background: #252a38;
+  color: inherit;
+  border: 2px solid #3a4157;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 110px;
+}
+
+.botao-escolha:hover:not(:disabled) {
+  border-color: #ffd84a;
+  transform: translateY(-2px);
+}
+
+.botao-escolha:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.icone {
+  font-size: 2.2rem;
+}
+
+.tecla {
+  font-size: 0.75rem;
+  color: #a9b0c4;
+}
+
+.botao-reiniciar {
+  margin-top: 16px;
+  background: #ffd84a;
+  color: #1b1f2a;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font: inherit;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Histórico */
+.historico {
+  margin-top: 24px;
+  text-align: left;
+  background: #252a38;
+  border-radius: 10px;
+  padding: 12px 18px;
+}
+
+.historico ol {
+  margin: 0;
+  padding-left: 22px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.oculto {
+  display: none;
+}
