@@ -21,3 +21,5 @@ css/estilo.css
 js/jogo.js
 README.md
 ```
+## IA 
+Auxiliou na ideia de cores e fontes
