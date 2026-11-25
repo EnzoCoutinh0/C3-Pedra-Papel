@@ -21,3 +21,7 @@ css/estilo.css
 js/jogo.js
 README.md
 ```
+
+## Uso de IA
+
+Usei IA para auxiliar na ideia de tema para a pagina.
